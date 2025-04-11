@@ -12,7 +12,7 @@ sqlalchemy
 pymongo
 elasticsearch
 gsv8pypi_python3
-joblib  # TODO: Sicherstellen, dass die Versionen kompatibel sind.
+joblib
 pydantic
 gunicorn
 jupyter

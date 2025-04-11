@@ -22,7 +22,7 @@ setup(
         'pymongo',
         'elasticsearch',
         'gsv8pypi_python3',
-        'joblib'  # TODO: Überprüfen, ob die Version konsistent ist.
+        'joblib'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
