@@ -53,7 +53,9 @@ integrated_system/
 │   │   └── README.md             
 │   ├── processed/                # Vorverarbeitete Daten
 │   │   └── README.md             
-│   └── external/                 # Externe Datensätze & Benchmarks
+│   ├── external/                # Externe Datensätze & Benchmarks
+│   │   └── README.md             
+│   └── models/                 # generierte Modelle
 │       └── README.md             
 │
 ├── src/                           # Hauptquellcode (modulare Sub-Pakete)
