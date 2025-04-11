@@ -21,24 +21,25 @@ from src.anomaly_detection.models.isolation_forest_model import IsolationForestM
 from src.utils.logging_utils import setup_logger
 from src.data_integration.db_connector.sql_connector import SQLConnector
 from src.online_learning.online_learning import online_learning_cycle
+from src.utils.config_utils import load_config
+
+# Konfiguration laden
+config = load_config()
+sensor_features = config["data"].get("sensor_features", ["x", "y", "z", "roll", "pitch", "yaw"])
+sensor_units = config["data"].get("sensor_units", {})  # Neue: Einheiten der Sensoren
 
 def simulated_sensor_stream():
     """
-    Simuliert einen Sensor-Datenstream, der periodisch einen DataFrame mit 6D-Daten erzeugt.
+    Simuliert einen Sensor-Datenstream mit Einheiten (zur internen Verwendung).
     """
     while True:
-        data = {
-            "x": random.gauss(0, 1),
-            "y": random.gauss(0, 1),
-            "z": random.gauss(0, 1),
-            "roll": random.gauss(0, 1),
-            "pitch": random.gauss(0, 1),
-            "yaw": random.gauss(0, 1)
-        }
+        data = { feature: random.gauss(0, 1) for feature in sensor_features }
         # Simuliere in 10% der Fälle eine Anomalie
         if random.random() < 0.1:
-            anomaly_field = random.choice(list(data.keys()))
+            anomaly_field = random.choice(sensor_features)
             data[anomaly_field] += random.gauss(5, 1)
+        # Optional: Anzeige der Sensorwerte mit Einheiten (nur zur Demonstration)
+        # data_with_units = { feature: f"{value} {sensor_units.get(feature, '')}" for feature, value in data.items() }
         yield pd.DataFrame([data])
         time.sleep(1)
 
@@ -82,7 +83,7 @@ class FeedbackInferenceEngine(InferenceEngine):
                             print("Feedback in Datenbank gespeichert.")
                         except Exception as e:
                             print("Fehler beim Speichern in der DB:", e)
-                    # TODO: Eventuell weitere Aktionen (z.B. lokale Speicherung) implementieren.
+                    # TODO: Eventuell weitere Aktionen (z. B. lokale Speicherung oder alternative Persistenz) implementieren.
                 else:
                     print("Keine Anomalie im aktuellen Datenpaket.")
             else:
@@ -93,12 +94,7 @@ def main():
     model = IsolationForestModel(contamination=0.05, n_estimators=10, random_state=42)
     # Dummy-Daten zur initialen Trainingsbasis
     dummy_data = pd.DataFrame({
-        "x": [0]*100,
-        "y": [0]*100,
-        "z": [0]*100,
-        "roll": [0]*100,
-        "pitch": [0]*100,
-        "yaw": [0]*100
+        feat: [0]*100 for feat in sensor_features
     })
     model.train(dummy_data)
     

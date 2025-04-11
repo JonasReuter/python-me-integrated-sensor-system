@@ -5,8 +5,15 @@ import joblib
 import os
 import uvicorn
 import pandas as pd
+from src.utils.config_utils import load_config
 
 app = FastAPI(title="Integriertes System API")
+
+# Konfiguration laden und Sensordimensionen bestimmen
+config = load_config()
+sensor_features = config["data"].get("sensor_features", ["x", "y", "z", "roll", "pitch", "yaw"])
+sensor_units = config["data"].get("sensor_units", {})  # Neue: Einheiten der Sensoren
+num_features = len(sensor_features)
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "anomaly_detection", "models", "isolation_forest_model.pkl")
 
@@ -16,12 +23,7 @@ else:
     from src.anomaly_detection.models.isolation_forest_model import IsolationForestModel
     # TODO: Weitere Validierungen bei Dummy-Daten und Modell-Initialisierung implementieren.
     dummy_data = pd.DataFrame({
-        "x": [0]*100,
-        "y": [0]*100,
-        "z": [0]*100,
-        "roll": [0]*100,
-        "pitch": [0]*100,
-        "yaw": [0]*100
+        feat: [0]*100 for feat in sensor_features
     })
     model = IsolationForestModel(contamination=0.05, n_estimators=100, random_state=42)
     model.train(dummy_data)
@@ -39,8 +41,8 @@ def predict():
     if model is None:
         raise HTTPException(status_code=500, detail="Modell nicht verfügbar. Bitte trainiere zuerst das Modell.")
     try:
-        # TODO: Möglichkeit zum direkten Aufruf mit spezifischen Features implementieren.
-        features = np.zeros((1, 6))
+        # Verwende num_features aus der Konfiguration
+        features = np.zeros((1, num_features))
         prediction = model.predict(features)
         return {"prediction": int(prediction[0])}
     except Exception as e:

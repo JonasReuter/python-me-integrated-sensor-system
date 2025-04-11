@@ -4,6 +4,14 @@ data:
   raw_path: "data/raw/"
   processed_path: "data/processed/"
   dimensions: 6  # Kann zwischen 1 und 6 angepasst werden
+  sensor_features: ["x", "y", "z", "roll", "pitch", "yaw"]
+  sensor_units:
+    x: "m"
+    y: "m"
+    z: "m"
+    roll: "deg"
+    pitch: "deg"
+    yaw: "deg"
 
 model:
   contamination: 0.05

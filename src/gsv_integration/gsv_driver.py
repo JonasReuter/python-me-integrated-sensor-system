@@ -25,6 +25,7 @@ class GSVDriver:
                 raise ImportError("gsv8pypi_python3 library is not installed.")
             connection = GSVConnection(port=self.port, baud_rate=self.baud_rate, device_id=self.device_id)
             connection.connect()  # TODO: Fehlerbehandlung erweitern.
+            # TODO: Erweiterte Fehlerbehandlung und Verbindungsvalidierung für den Live-Betrieb implementieren.
             return connection
     
     def read_data(self):
