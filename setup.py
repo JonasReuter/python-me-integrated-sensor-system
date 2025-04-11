@@ -4,8 +4,9 @@ setup(
     name='python-me-integrated-sensor-system',
     version='0.1.0',
     description='Integriertes System für Anomalieerkennung, Visualisierung und Datenintegration mit GSV Messverstärker Integration',
-    author='Your Name',
-    packages=find_packages(),
+    author='Jonas Reuter',
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
     install_requires=[
         'numpy',
         'pandas',
