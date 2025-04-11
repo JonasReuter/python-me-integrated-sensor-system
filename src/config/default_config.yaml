@@ -27,3 +27,27 @@ gsv:
   port: 5000
   baud_rate: 9600
   device_id: "GSV-001"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["*"]          # Neue: CORS-Konfiguration für die API
+  auth:
+    enabled: false             # Neue: API-Authentifizierung aktivieren/deaktivieren
+    token: "geheimer_token"    # Platzhalter für einen API-Schlüssel
+
+logging:
+  level: "INFO"                # Neue: Log-Level (DEBUG, INFO, WARN, ERROR)
+  file: "logs/integrated_system.log"  # Pfad zur Log-Datei
+
+database:
+  default:
+    url: "sqlite:///feedback.db"   # Neue: Standard-Datenbankverbindung
+  postgres:                       # Optional: Weitere Datenbankkonfigurationen
+    url: "postgresql://user:pass@localhost:5432/dbname"
+
+kafka:
+  bootstrap_servers: ["localhost:9092"]   # Neue: Kafka-Verbindungsdetails
+  topics:
+    input: "sensor_input"
+    feedback: "feedback_topic"

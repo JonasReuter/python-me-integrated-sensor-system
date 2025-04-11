@@ -14,6 +14,9 @@ config = load_config()
 sensor_features = config["data"].get("sensor_features", ["x", "y", "z", "roll", "pitch", "yaw"])
 sensor_units = config["data"].get("sensor_units", {})  # Neue: Einheiten der Sensoren
 num_features = len(sensor_features)
+api_config = config.get("api", {})  # Neue API-Konfiguration
+api_host = api_config.get("host", "0.0.0.0")
+api_port = api_config.get("port", 8000)
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "anomaly_detection", "models", "isolation_forest_model.pkl")
 
@@ -49,4 +52,4 @@ def predict():
         raise HTTPException(status_code=400, detail=str(e))
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host=api_host, port=api_port)

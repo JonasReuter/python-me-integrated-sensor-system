@@ -4,13 +4,15 @@ GSV API
 Dieses Modul stellt eine API zur Steuerung und Datenerfassung von GSV Messverstärkern bereit.
 """
 from .gsv_driver import GSVDriver
+from src.utils.config_utils import load_config
 
 class GSVAPI:
-    def __init__(self, port: int, baud_rate: int, device_id: str, simulation: bool = True):
-        # Verbindung wird nicht automatisch aufgebaut, sondern explizit via connect() initiiert.
-        self.port = port
-        self.baud_rate = baud_rate
-        self.device_id = device_id
+    def __init__(self, simulation: bool = True):
+        config = load_config()
+        gsv_conf = config.get("gsv", {})
+        self.port = gsv_conf.get("port", 5000)
+        self.baud_rate = gsv_conf.get("baud_rate", 9600)
+        self.device_id = gsv_conf.get("device_id", "GSV-001")
         self.simulation = simulation
         self.driver = None
 
@@ -19,7 +21,6 @@ class GSVAPI:
         Baut die Verbindung zum GSV Gerät auf.
         """
         self.driver = GSVDriver(self.port, self.baud_rate, self.device_id, simulation=self.simulation)
-        # Optional: Überprüfe die Verbindung nach dem Initialisieren
         if not self.simulation and not self.driver:
             raise ConnectionError("Verbindung zum GSV Gerät konnte nicht aufgebaut werden.")
         print("Verbindung zum GSV Gerät hergestellt.")
@@ -48,5 +49,4 @@ class GSVAPI:
             self.driver.close_connection()
             print("Verbindung zum GSV Gerät wurde geschlossen.")
         except Exception as e:
-            # Fehler beim Schließen der Verbindung protokollieren
             print(f"Fehler beim Schließen der Verbindung: {e}")
