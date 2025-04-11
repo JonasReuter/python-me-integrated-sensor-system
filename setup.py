@@ -22,6 +22,7 @@ setup(
         'pymongo',
         'elasticsearch',
         # ggf. weitere Bibliotheken (z.B. für MLflow, Optuna, Dash, etc.)
+        'gsv8pypi_python3',  # hinzugefügt für die GSV Integration
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

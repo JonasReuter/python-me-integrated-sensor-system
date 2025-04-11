@@ -11,3 +11,4 @@ kafka-python
 sqlalchemy
 pymongo
 elasticsearch
+gsv8pypi_python3
