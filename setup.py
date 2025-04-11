@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='integrated_system',
+    name='python-me-integrated-sensor-system',
     version='0.1.0',
     description='Integriertes System für Anomalieerkennung, Visualisierung und Datenintegration mit GSV Messverstärker Integration',
     author='Your Name',
-    packages=find_packages(where='src'),
-    package_dir={'': 'src'},
+    packages=find_packages(),
     install_requires=[
         'numpy',
         'pandas',
@@ -21,7 +20,6 @@ setup(
         'sqlalchemy',
         'pymongo',
         'elasticsearch',
-        'gsv8pypi_python3',
         'joblib'
     ],
     classifiers=[

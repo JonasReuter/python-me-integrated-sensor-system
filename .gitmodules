@@ -1,0 +1,3 @@
+[submodule "src/gsv_integration/gsv8pypi_python3"]
+	path = src/gsv_integration/gsv8pypi_python3
+	url = https://github.com/me-systeme/gsv8pypi_python3.git

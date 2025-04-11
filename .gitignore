@@ -13,7 +13,7 @@ env/
 venv/
 
 # Jupyter Notebook checkpoints
-.ipynb_checkpoints/
+.ipynb-checkpoints/
 
 # IDE-spezifische Dateien
 .vscode/
@@ -21,3 +21,11 @@ venv/
 
 # Docker Logs
 *.log
+
+# Ausschließen von Data-Sachen, aber README im data-Verzeichnis einschließen
+data/*
+!data/README.md
+!data/*/README.md
+
+# Ausschließen des Git-Submoduls, damit es frisch geladen wird bei jeder Installation/Clone
+src/gsv_integration/gsv8pypi_python3/*

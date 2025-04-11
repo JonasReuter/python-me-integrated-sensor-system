@@ -98,6 +98,24 @@ def main():
     })
     model.train(dummy_data)
     
+    # NEU: Prüfe, ob eine Excel-Datei in data/raw existiert und verarbeite diese
+    import os
+    excel_path = os.path.join("data", "raw", "sensordata.xlsx")
+    if os.path.exists(excel_path):
+        print("Excel Datei gefunden. Verarbeite 6D Sensordaten aus:", excel_path)
+        # Falls in der Excel-Datei das Komma als Dezimaltrennzeichen verwendet wird:
+        df_excel = pd.read_excel(excel_path, decimal=",")
+        # Optional: Falls kein Header in der Excel-Datei vorhanden ist, setzen Sie diesen manuell.
+        # Beispiel: Es werden die ersten 6 Spalten als Sensorwerte angenommen.
+        if df_excel.columns.tolist()[0] != sensor_features[0]:
+            df_excel.columns = sensor_features + list(df_excel.columns[6:])
+        # Wählen Sie nur die Spalten, die den Sensordaten entsprechen
+        df_sensor = df_excel[sensor_features]
+        predictions = model.predict(df_sensor)
+        print("Vorhersagen aus der Excel-Datei:", predictions)
+        # Optional: Den Prozess hier beenden, wenn nur die Excel-Daten getestet werden sollen.
+        return
+    
     # DB-Connector initialisieren (Beispiel: SQLite)
     db_url = "sqlite:///feedback.db"
     sql_connector = SQLConnector(db_url=db_url)
