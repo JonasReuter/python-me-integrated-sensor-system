@@ -18,7 +18,8 @@ api_config = config.get("api", {})  # Neue API-Konfiguration
 api_host = api_config.get("host", "0.0.0.0")
 api_port = api_config.get("port", 8000)
 
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "anomaly_detection", "models", "isolation_forest_model.pkl")
+MODEL_PATH = config["model"].get("save_path", 
+    os.path.join(os.path.dirname(__file__), "..", "anomaly_detection", "models", "isolation_forest_model.pkl"))
 
 if os.path.exists(MODEL_PATH):
     model = joblib.load(MODEL_PATH)

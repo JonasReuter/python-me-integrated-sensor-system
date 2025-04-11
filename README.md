@@ -27,6 +27,10 @@ Dieses Projekt stellt ein umfassendes System bereit, das Hardware und Software z
 - **Integration der GSV Messverstärker von me‑systeme:**  
   Das System schließt speziell auch die Anbindung an die GSV Messverstärker ein – Hardwarekomponenten, wie sie in den offiziellen GitHub-Repositorien von me‑systeme dokumentiert sind. Diese Messverstärker gewährleisten eine präzise Signalkonditionierung und bieten flexible Schnittstellen für den direkten Anschluss an Sensornetzwerke in industriellen Anwendungen. Über bereitgestellte Treiber und APIs lässt sich die Hardware nahtlos in das Ökosystem einbinden. Somit können Sie als Sensorhersteller nicht nur hochwertige Sensorhardware bereitstellen, sondern auch eine vollständige Lösung zur Datenerfassung, -analyse und -visualisierung in einem integrierten System anbieten.
 
+## Modelle zur Anomalieerkennung
+
+Details zu den eingesetzten Anomaly Detection Modellen, ihren Vor- und Nachteilen sowie praxisnahen Einsatzszenarien finden Sie in [dieser Dokumentation](docs/model_reference.md).
+
 ## Projektstruktur
 
 ```
@@ -79,7 +83,9 @@ integrated_system/
 │   │   ├── model_evaluation.py    # Evaluationsmetriken
 │   │   └── models/                # Konkrete Modellimplementierungen
 │   │       ├── isolation_forest_model.py
-│   │       └── autoencoder_model.py
+│   │       ├── autoencoder_model.py
+│   │       ├── one_class_svm_model.py
+│   │       └── lof_model.py
 │   │
 │   ├── visualization/             # Visualisierungsbibliothek
 │   │   ├── __init__.py
@@ -123,7 +129,8 @@ integrated_system/
 │
 └── examples/                      # Beispielskripte und Jupyter-Notebooks
     ├── example_notebook.ipynb
-    └── plug_n_play_with_feedback.py   # Plug n Play Script inkl. Feedback-Engine & DB-Anbindung
+    ├── plug_n_play_with_feedback.py   # Plug n Play Script inkl. Feedback-Engine & DB-Anbindung
+    └── predictive_maintenance_case.py   # Erweiterter Use-Case mit modellbasierter Anomalieerkennung
 ```
 
 ## Installation
@@ -171,6 +178,10 @@ integrated_system/
 - **Integration mit GSV Messverstärkern von me‑systeme:**  
   Nutzen Sie die Schnittstellen (wie in den offiziellen GitHub-Repositorien dokumentiert), um GSV Messverstärker in unser Ökosystem zu integrieren. Dadurch erhalten Sie präzise, verstärkte Sensordaten, die nahtlos in unsere Plattform eingebunden werden können – ideal zur Erfassung und Echtzeitverarbeitung in industriellen Anwendungen.
 
+## Beispiele
+
+- **Predictive Maintenance Case**: Zeigt einen erweiterten Use-Case mit modellbasierter Anomalieerkennung und simulierter Maschinensteuerung (siehe `examples/predictive_maintenance_case.py`).
+
 ## Online Learning & Nutzerfeedback
 
 Das System sammelt bei erkannten Anomalien Nutzerfeedback („y“ für bestätigte Anomalie, „n“ für False Positive). Dieses Feedback wird über die Datenbank-Connectoren persistiert und in regelmäßigen Retraining-Zyklen genutzt, um die Modelle kontinuierlich zu verbessern.
@@ -180,6 +191,7 @@ Das System sammelt bei erkannten Anomalien Nutzerfeedback („y“ für bestäti
 Detaillierte Informationen zur Nutzung der einzelnen Module finden Sie in:
 - [User Guide](docs/user_guide.md)
 - [API Reference](docs/api_reference.md)
+- [Model Reference](docs/model_reference.md)
 
 ## Lizenz & Mitwirkende
 
