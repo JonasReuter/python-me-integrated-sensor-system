@@ -21,8 +21,8 @@ setup(
         'sqlalchemy',
         'pymongo',
         'elasticsearch',
-        # ggf. weitere Bibliotheken (z.B. für MLflow, Optuna, Dash, etc.)
-        'gsv8pypi_python3',  # hinzugefügt für die GSV Integration
+        'gsv8pypi_python3',
+        'joblib'  # TODO: Überprüfen, ob die Version konsistent ist.
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

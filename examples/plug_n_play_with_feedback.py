@@ -82,6 +82,7 @@ class FeedbackInferenceEngine(InferenceEngine):
                             print("Feedback in Datenbank gespeichert.")
                         except Exception as e:
                             print("Fehler beim Speichern in der DB:", e)
+                    # TODO: Eventuell weitere Aktionen (z.B. lokale Speicherung) implementieren.
                 else:
                     print("Keine Anomalie im aktuellen Datenpaket.")
             else:

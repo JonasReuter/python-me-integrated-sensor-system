@@ -48,4 +48,5 @@ class GSVAPI:
             self.driver.close_connection()
             print("Verbindung zum GSV Gerät wurde geschlossen.")
         except Exception as e:
+            # Fehler beim Schließen der Verbindung protokollieren
             print(f"Fehler beim Schließen der Verbindung: {e}")

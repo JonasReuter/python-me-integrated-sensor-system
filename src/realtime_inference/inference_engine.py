@@ -10,6 +10,7 @@ class InferenceEngine:
         self.polling_interval = polling_interval
         self.data_queue = Queue()
         self.is_running = False
+        self.thread = None
         self.logger = logging.getLogger(__name__)
 
     def add_data(self, data: pd.DataFrame):
@@ -33,6 +34,6 @@ class InferenceEngine:
 
     def stop(self):
         self.is_running = False
-        if hasattr(self, 'thread'):
+        if self.thread:
             self.thread.join()
         self.logger.info("Inference Engine gestoppt.")

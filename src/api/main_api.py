@@ -4,41 +4,45 @@ import numpy as np
 import joblib
 import os
 import uvicorn
+import pandas as pd
 
 app = FastAPI(title="Integriertes System API")
 
-# Angenommener Pfad zum trainierten Isolation-Forest-Modell, das mittels joblib gespeichert wurde
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "anomaly_detection", "models", "isolation_forest_model.pkl")
 
-try:
+if os.path.exists(MODEL_PATH):
     model = joblib.load(MODEL_PATH)
-except Exception as e:
-    model = None
-    print(f"Fehler beim Laden des Modells: {e}")
+else:
+    from src.anomaly_detection.models.isolation_forest_model import IsolationForestModel
+    # TODO: Weitere Validierungen bei Dummy-Daten und Modell-Initialisierung implementieren.
+    dummy_data = pd.DataFrame({
+        "x": [0]*100,
+        "y": [0]*100,
+        "z": [0]*100,
+        "roll": [0]*100,
+        "pitch": [0]*100,
+        "yaw": [0]*100
+    })
+    model = IsolationForestModel(contamination=0.05, n_estimators=100, random_state=42)
+    model.train(dummy_data)
+    joblib.dump(model, MODEL_PATH)
 
 class PredictRequest(BaseModel):
     features: list[float]
 
 @app.get("/")
 def read_root():
-    return {"message": "Anomaly Detection API is running."}
+    return {"message": "Willkommen bei der Anomaly Detection API."}
 
-@app.post("/predict")
-def predict(request: PredictRequest):
+@app.get("/predict")
+def predict():
     if model is None:
         raise HTTPException(status_code=500, detail="Modell nicht verfügbar. Bitte trainiere zuerst das Modell.")
     try:
-        # Eingabedaten in ein 2D NumPy-Array umformen
-        features = np.array(request.features).reshape(1, -1)
-        # Isolation-Forest liefert -1 als Anomalie und 1 als normal
+        # TODO: Möglichkeit zum direkten Aufruf mit spezifischen Features implementieren.
+        features = np.zeros((1, 6))
         prediction = model.predict(features)
-        anomaly = True if prediction[0] == -1 else False
-        # Entscheidungsscore liefert einen Wert, der näher an negativen Werten bei Anomalien liegt
-        anomaly_score = float(model.decision_function(features)[0])
-        return {
-            "anomaly": anomaly,
-            "anomaly_score": anomaly_score
-        }
+        return {"prediction": int(prediction[0])}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
