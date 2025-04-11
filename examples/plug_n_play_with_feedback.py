@@ -109,11 +109,11 @@ def main():
     feedback_engine.start()
 
     # Periodischer Retraining-Zyklus (alle 5 Minuten)
-    # TODO: Nach Retraining die Feedback-InferenceEngine mit dem neuen Modell updaten (z. B. durch Austausch von self.model).
     def retraining_loop():
         nonlocal model
         while True:
             model = online_learning_cycle(model, min_samples=10, epochs=3)
+            feedback_engine.model = model  # neues Modell wird der Engine zugewiesen
             time.sleep(300)
     retraining_thread = threading.Thread(target=retraining_loop, daemon=True)
     retraining_thread.start()
