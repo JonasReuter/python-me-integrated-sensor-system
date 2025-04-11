@@ -42,6 +42,19 @@ def simulated_sensor_stream():
         yield pd.DataFrame([data])
         time.sleep(1)
 
+def get_nonblocking_feedback(prompt: str, timeout: float = 5.0) -> str:
+    import threading
+    result = []
+    def target():
+        result.append(input(prompt))
+    thread = threading.Thread(target=target)
+    thread.daemon = True
+    thread.start()
+    thread.join(timeout)
+    if thread.is_alive():
+        return None
+    return result[0].strip().lower() if result else None
+
 class FeedbackInferenceEngine(InferenceEngine):
     def __init__(self, model, polling_interval: float = 0.5, db_connector=None):
         super().__init__(model, polling_interval)
@@ -55,8 +68,9 @@ class FeedbackInferenceEngine(InferenceEngine):
                 if any(pred == -1 for pred in predictions):
                     print("\nAnomalie erkannt in den folgenden Sensordaten:")
                     print(data)
-                    # TODO: Verbesserung des Nutzerfeedbacks: Nicht-blockierende Eingabe bzw. asynchrone Abfrage implementieren.
-                    feedback_input = input("Bestätigen Sie die Anomalie? (y/n): ").strip().lower()
+                    # Nicht-blockierende Abfrage des Nutzerfeedbacks
+                    feedback_input = get_nonblocking_feedback("Bestätigen Sie die Anomalie? (y/n): ", timeout=5)
+                    feedback_input = feedback_input if feedback_input is not None else "n"
                     feedback_label = 1 if feedback_input == 'y' else 0
                     # Erstellen eines Feedback-Datensatzes
                     sample = data.iloc[0].to_dict()
