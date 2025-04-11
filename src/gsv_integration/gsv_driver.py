@@ -20,13 +20,13 @@ class GSVDriver:
             return True
         else:
             try:
-                from gsv8pypi_python3 import GSVConnection
+                from gsv8pypi_python3.gsv8 import gsv8  # lokaler Import der gsv8-Klasse
             except ImportError:
-                raise ImportError("gsv8pypi_python3 library is not installed.")
+                raise ImportError("Lokale gsv8 Treiber nicht gefunden.")
             try:
-                connection = GSVConnection(port=self.port, baud_rate=self.baud_rate, device_id=self.device_id)
-                connection.connect()  # Verbindung wird initialisiert.
-                # TODO: Erweiterte Fehlerbehandlung und Verbindungsvalidierung für den Live-Betrieb implementieren. (Offen)
+                # Erzeuge ein gsv8-Objekt (Parameter: port, baudrate)
+                connection = gsv8(port=self.port, baudrate=self.baud_rate)
+                # Falls weitere Initialisierung notwendig ist, kann hier z.B. ein Transmission-Start erfolgen.
                 return connection
             except Exception as e:
                 raise ConnectionError(f"Fehler beim Herstellen der Verbindung: {e}")
@@ -44,8 +44,8 @@ class GSVDriver:
             }
             return data
         else:
-            # TODO: Live-Datenabruf weiter testen und robust machen.
-            return self.connection.get_sensor_data()
+            # Verwende die ReadValue()-Methode der gsv8 Klasse, um den Messwert zu erhalten
+            return self.connection.ReadValue()
 
     def close_connection(self):
         if self.simulation:
