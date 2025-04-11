@@ -2,3 +2,6 @@ flake8
 black
 mypy
 sphinx
+pytest
+pytest-cov
+ipykernel
