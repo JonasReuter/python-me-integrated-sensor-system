@@ -130,8 +130,8 @@ integrated_system/
 
 1. **Repository klonen:**
    ```bash
-   git clone https://github.com/DeinBenutzername/integrated_system.git
-   cd integrated_system
+   git clone https://github.com/JonasReuter/python-me-integrated-sensor-system.git
+   cd python-me-integrated-sensor-system
    ```
 
 2. **Abhängigkeiten installieren:**
