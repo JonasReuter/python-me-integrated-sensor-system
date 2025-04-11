@@ -1,0 +1,13 @@
+numpy
+pandas
+scikit-learn
+matplotlib
+pyyaml
+plotly
+tensorflow
+fastapi
+uvicorn
+kafka-python
+sqlalchemy
+pymongo
+elasticsearch

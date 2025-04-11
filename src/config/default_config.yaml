@@ -1,0 +1,21 @@
+# Standardkonfiguration für das Integrierte System
+
+data:
+  raw_path: "data/raw/"
+  processed_path: "data/processed/"
+  dimensions: 6  # Kann zwischen 1 und 6 angepasst werden
+
+model:
+  contamination: 0.05
+  random_state: 42
+  n_estimators: 100
+
+preprocessing:
+  normalization: true
+  resample_rate: "1S"
+
+# Konfiguration zur GSV Integration (Beispielwerte)
+gsv:
+  port: 5000
+  baud_rate: 9600
+  device_id: "GSV-001"
