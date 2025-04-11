@@ -5,6 +5,7 @@ Dieses Modul implementiert einen Adapter/Wrapping-Mechanismus für die GSV Messv
 Stellen Sie sicher, dass die erforderlichen GSV Python 3 Bibliotheken installiert sind.
 """
 
+# TODO: Implementierung der GSV-Wirklichkeit in gsv_driver.py erweitern.
 class GSVDriver:
     def __init__(self, port: int, baud_rate: int, device_id: str):
         self.port = port

@@ -6,6 +6,7 @@ from src.utils.logging_utils import setup_logger
 logger = setup_logger("OnlineLearning", level=20)
 FEEDBACK_CSV = "feedback_data.csv"
 
+# TODO: Einheitliche Feedback-Persistenz definieren und entsprechend in allen Modulen nutzen.
 def save_feedback(sample: dict):
     """
     Speichert einen Feedback-Datensatz in einer CSV-Datei.
@@ -26,6 +27,7 @@ def load_feedback():
         logger.info("Keine Feedbackdaten gefunden.")
         return pd.DataFrame()
 
+# TODO: Online Learning: Methoden zum feingranularen Retraining und Feedback-Handling vollständig implementieren.
 def retrain_model(model, new_data: pd.DataFrame, epochs: int = 5):
     """
     Retrainiert das Modell anhand der neuen Feedbackdaten.

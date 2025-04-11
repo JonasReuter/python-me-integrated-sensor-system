@@ -68,7 +68,7 @@ integrated_system/
 │   │       ├── nosql_connector.py  # NoSQL-Connector (z. B. MongoDB/PyMongo)
 │   │       └── elasticsearch_connector.py  # Elasticsearch-Connector
 │   │
-│   ├── data_processing/           # Vorverarbeitung, Bereinigung und Feature Extraction
+│   ├── data_preprocessing/           # Vorverarbeitung, Bereinigung und Feature Extraction
 │   │   ├── __init__.py
 │   │   └── transformer.py
 │   │

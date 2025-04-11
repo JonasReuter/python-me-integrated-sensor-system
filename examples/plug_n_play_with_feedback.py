@@ -55,6 +55,7 @@ class FeedbackInferenceEngine(InferenceEngine):
                 if any(pred == -1 for pred in predictions):
                     print("\nAnomalie erkannt in den folgenden Sensordaten:")
                     print(data)
+                    # TODO: Verbesserung des Nutzerfeedbacks: Nicht-blockierende Eingabe bzw. asynchrone Abfrage implementieren.
                     feedback_input = input("Bestätigen Sie die Anomalie? (y/n): ").strip().lower()
                     feedback_label = 1 if feedback_input == 'y' else 0
                     # Erstellen eines Feedback-Datensatzes
@@ -94,6 +95,7 @@ def main():
     feedback_engine.start()
 
     # Periodischer Retraining-Zyklus (alle 5 Minuten)
+    # TODO: Nach Retraining die Feedback-InferenceEngine mit dem neuen Modell updaten (z. B. durch Austausch von self.model).
     def retraining_loop():
         nonlocal model
         while True:
