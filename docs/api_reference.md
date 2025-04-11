@@ -10,7 +10,7 @@ Diese API Reference beschreibt alle Module und Funktionen des integrierten Syste
 - **src/data_integration/:**  
   Funktionen zur Anbindung von Messaging-Systemen (Kafka) und Persistenz (DB-Connectoren).
 
-- **src/data_processing/:**  
+- **src/data_preprocessing/:**  
   Vorverarbeitung und Feature Extraction der Sensordaten.
 
 - **src/anomaly_detection/:**  

@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
 import numpy as np
-from src.data_processing.transformer import clean_data, normalize_data
+from src.data_preprocessing.transformer import clean_data, normalize_data
 
 class TestDataProcessing(unittest.TestCase):
     def setUp(self):

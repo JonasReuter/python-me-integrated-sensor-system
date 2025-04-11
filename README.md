@@ -116,7 +116,7 @@ integrated_system/
 │
 ├── tests/                         # Unit- und Integrationstests
 │   ├── __init__.py
-│   ├── test_data_processing.py
+│   ├── test_data_preprocessing.py
 │   ├── test_anomaly_detection.py
 │   ├── test_visualization.py
 │   └── test_api.py
